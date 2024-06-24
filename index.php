@@ -1,5 +1,21 @@
 <?php
 
+class Movie
+{
+  // VARIABILI D'ISTANZA
+  private string $title;
+  private string $genre;
+  private int $year;
+
+  // COSTRUTTORE
+  public function __construct(string $title, string $genre, int $year)
+  {
+    $this->title = $title;
+    $this->genre = $genre;
+    $this->year = $year;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
