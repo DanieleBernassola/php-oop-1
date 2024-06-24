@@ -22,6 +22,17 @@ class Movie
   }
 }
 
+// ISTANZIATI DUE OGGETTI MOVIE CON EXCEPTION
+try {
+  $movies = [
+    new Movie("Inception", "Sci-fi", 2010),
+    new Movie("The Matrix", "Sci-fi", 1999)
+  ];
+} catch (Exception $e) {
+  echo "Eccezione: " . $e->getMessage();
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +45,14 @@ class Movie
 </head>
 
 <body>
-
+  <!-- TITOLO -->
+  <h1>Movies</h1>
+  <!-- LISTA FILM -->
+  <ul>
+    <?php foreach ($movies as $movie) : ?>
+      <li><?php echo $movie->getInfo() ?></li>
+    <?php endforeach; ?>
+  </ul>
 </body>
 
 </html>
