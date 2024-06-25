@@ -1,18 +1,40 @@
 <?php
 
+// CLASSE ATTORI
+class Actor
+{
+  // VARIABILI D'ISTANZA ATTORI
+  private string $name;
+  private string $surname;
+
+  public function __construct(string $name, string $surname)
+  {
+    $this->name = $name;
+    $this->surname = $surname;
+  }
+
+  // METODO GET PER NOME ATTORE
+  public function getFullName(): string
+  {
+    return "{$this->name} {$this->surname}";
+  }
+}
+// CLASSE FILM
 class Movie
 {
   // VARIABILI D'ISTANZA
   private string $title;
   private array $genres; // PIù DI UN GENERE
   private int $year;
+  private array $actors; // PIù DI UN ATTORE
 
   // COSTRUTTORE
-  public function __construct(string $title, array $genres, int $year)
+  public function __construct(string $title, array $genres, int $year, array $actors = [])
   {
     $this->title = $title;
     $this->setGenres($genres);
     $this->year = $year;
+    $this->actors = $actors;
   }
 
   // SET GENERI CON ECCEZIONI
@@ -29,19 +51,40 @@ class Movie
     $this->genres = $genres;
   }
 
+  // SET ATTORI
+  public function setActors(array $actors)
+  {
+    $this->actors = $actors;
+  }
+
   // METODO GET PER INFO FILM
   public function getInfo()
   {
-    $genres = implode(", ", $this->genres); // GENERI DIVENTA UNA STRINGA, VENGONO SEPARATE DA ", "
-    return "Titolo: {$this->title}, Generi: {$genres}, Anno: {$this->year}";
+    // GENERI COME STRINGA
+    $genresString = '';
+    foreach ($this->genres as $genre) {
+      $genresString .= $genre . ', ';
+    }
+    // ATTORI COME STRINGA
+    $actorsString = '';
+    foreach ($this->actors as $actor) {
+      $actorsString .= $actor->getFullName() . ', ';
+    }
+    return "Titolo: {$this->title}, Generi: {$genresString}, Anno: {$this->year}, Attori: {$actorsString}";
   }
 }
+
+// CREAZIONE ATTORI
+$actor1 = new Actor("Leonardo", "DiCaprio");
+$actor2 = new Actor("Joseph", "Gordon-Levitt");
+$actor3 = new Actor("Keanu", "Reeves");
+$actor4 = new Actor("Laurence", "Fishburne");
 
 // ISTANZIATI DUE OGGETTI MOVIE CON EXCEPTION
 try {
   $movies = [
-    new Movie("Inception", ["Sci-fi", "Thriller"], 2010),
-    new Movie("The Matrix", ["Sci-fi", "Action"], 1999)
+    new Movie("Inception", ["Sci-fi", "Thriller"], 2010, [$actor1, $actor2]),
+    new Movie("The Matrix", ["Sci-fi", "Action"], 1999, [$actor3, $actor4])
   ];
 } catch (Exception $e) {
   echo "Eccezione: " . $e->getMessage();
