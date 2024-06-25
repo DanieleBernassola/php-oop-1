@@ -28,6 +28,9 @@ class Movie
   private int $year;
   private array $actors; // PIù DI UN ATTORE
 
+  // VARIABILE STATICA
+  public static int $movieCount = 0;
+
   // COSTRUTTORE
   public function __construct(string $title, array $genres, int $year, array $actors = [])
   {
@@ -35,6 +38,13 @@ class Movie
     $this->setGenres($genres);
     $this->year = $year;
     $this->actors = $actors;
+    self::$movieCount++; // INCREMENTA CONTATORE DEI FILM
+  }
+
+  // METODO STATICO
+  public static function getMovieCount(): int
+  {
+    return self::$movieCount;
   }
 
   // SET GENERI CON ECCEZIONI
@@ -128,6 +138,7 @@ try {
       <!-- RISULTATO LISTA CON NULL SAFE OPERATOR -->
       <li><?php echo $movie?->getInfo() ?? 'Informazioni dei film non disponibili'; ?></li>
     <?php endforeach; ?>
+    <p>Numero totale di film: <?= Movie::getMovieCount(); ?></p>
   </ul>
 </body>
 
