@@ -4,29 +4,43 @@ class Movie
 {
   // VARIABILI D'ISTANZA
   private string $title;
-  private string $genre;
+  private array $genres; // PIù DI UN GENERE
   private int $year;
 
   // COSTRUTTORE
-  public function __construct(string $title, string $genre, int $year)
+  public function __construct(string $title, array $genres, int $year)
   {
     $this->title = $title;
-    $this->genre = $genre;
+    $this->setGenres($genres);
     $this->year = $year;
+  }
+
+  // GENERI CON ECCEZIONI
+  public function setGenres(array $genres)
+  {
+    if (empty($genres)) {
+      throw new InvalidArgumentException("Il genere deve essere una lista non vuota.");
+    }
+    foreach ($genres as $genre) {
+      if (!is_string($genre) || empty($genre)) {
+        throw new InvalidArgumentException("Ogni genere deve essere una stringa non vuota.");
+      }
+    }
+    $this->genres = $genres;
   }
 
   // METODO GET PER INFO FILM
   public function getInfo()
   {
-    return "Titolo: {$this->title}, Genere: {$this->genre}, Anno: {$this->year}";
+    return "Titolo: {$this->title}, Genere: {$this->genres}, Anno: {$this->year}";
   }
 }
 
 // ISTANZIATI DUE OGGETTI MOVIE CON EXCEPTION
 try {
   $movies = [
-    new Movie("Inception", "Sci-fi", 2010),
-    new Movie("The Matrix", "Sci-fi", 1999)
+    new Movie("Inception", ["Sci-fi", "Thriller"], 2010),
+    new Movie("The Matrix", ["Sci-fi", "Action"], 1999)
   ];
 } catch (Exception $e) {
   echo "Eccezione: " . $e->getMessage();
