@@ -51,10 +51,25 @@ class Movie
     $this->genres = $genres;
   }
 
+  // METODO ADD NUOVO GENERE
+  public function addGenre(string $genre)
+  {
+    if (!is_string($genre) || empty($genre)) {
+      throw new InvalidArgumentException("Il genere deve essere una stringa non vuota.");
+    }
+    $this->genres[] = $genre;
+  }
+
   // SET ATTORI
   public function setActors(array $actors)
   {
     $this->actors = $actors;
+  }
+
+  // METODO ADD NUOVO ATTORE
+  public function addActor(Actor $actor): void
+  {
+    $this->actors[] = $actor;
   }
 
   // METODO GET PER INFO FILM
@@ -86,6 +101,10 @@ try {
     new Movie("Inception", ["Sci-fi", "Thriller"], 2010, [$actor1, $actor2]),
     new Movie("The Matrix", ["Sci-fi", "Action"], 1999, [$actor3, $actor4])
   ];
+
+  // ADD NUOVI GENERI E ATTORI
+  $movies[0]->addGenre("Action");
+  $movies[0]->addActor(new Actor("Tom", "Hardy"));
 } catch (Exception $e) {
   echo "Eccezione: " . $e->getMessage();
 }
@@ -106,7 +125,8 @@ try {
   <!-- LISTA FILM -->
   <ul>
     <?php foreach ($movies as $movie) : ?>
-      <li><?php echo $movie->getInfo() ?></li>
+      <!-- RISULTATO LISTA CON NULL SAFE OPERATOR -->
+      <li><?php echo $movie?->getInfo() ?? 'Informazioni dei film non disponibili'; ?></li>
     <?php endforeach; ?>
   </ul>
 </body>
