@@ -15,7 +15,7 @@ class Movie
     $this->year = $year;
   }
 
-  // GENERI CON ECCEZIONI
+  // SET GENERI CON ECCEZIONI
   public function setGenres(array $genres)
   {
     if (empty($genres)) {
@@ -32,7 +32,8 @@ class Movie
   // METODO GET PER INFO FILM
   public function getInfo()
   {
-    return "Titolo: {$this->title}, Genere: {$this->genres}, Anno: {$this->year}";
+    $genres = implode(", ", $this->genres); // GENERI DIVENTA UNA STRINGA, VENGONO SEPARATE DA ", "
+    return "Titolo: {$this->title}, Generi: {$genres}, Anno: {$this->year}";
   }
 }
 
@@ -46,9 +47,7 @@ try {
   echo "Eccezione: " . $e->getMessage();
 }
 
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
